@@ -2,9 +2,9 @@
 #define PROCESS_H
 
 #include <string.h>
-
-struct ProcessInfo
-{
+using namespace std;
+class ProcessInfo {
+public:
     char name[256];
     int pid;
     int priority;
@@ -13,20 +13,29 @@ struct ProcessInfo
     int left_time;
     int waiting_time;
     int response_time;
+
+    ProcessInfo(){}
+    ProcessInfo(char *name, int pid, int priority, int burst_time, int arrival_time) {
+        strcpy(this->name, name);
+        this->pid = pid;
+        this->priority = priority;
+        this->burst_time = burst_time;
+        this->arrival_time = arrival_time;
+        this->left_time = burst_time;
+        this->waiting_time = 0;
+        this->response_time = 0;
+    }
+    void InitProcessInfo(char *name, int pid, int priority, int burst_time, int arrival_time) {
+        strcpy(this->name, name);
+        this->pid = pid;
+        this->priority = priority;
+        this->burst_time = burst_time;
+        this->arrival_time = arrival_time;
+        this->left_time = burst_time;
+        this->waiting_time = 0;
+        this->response_time = 0;
+    }
 };
 
-struct ProcessInfo initializeProcessInfo(char *name, int pid, int priority, int burst_time, int arrival_time)
-{
-    struct ProcessInfo newProcess;
-    strcpy(newProcess.name, name);
-    newProcess.pid = pid;
-    newProcess.priority = priority;
-    newProcess.burst_time = burst_time;
-    newProcess.arrival_time = arrival_time;
-    newProcess.left_time = burst_time;
-    newProcess.waiting_time = 0;
-    newProcess.response_time = 0;
-    return newProcess;
-}
 
 #endif
