@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Procesos</title>
+</head>
+<body>
+
+    <div id="processInfo"></div>
+    <button onclick="fetchData()">Actualizar Datos</button>
+
+    <script>
+        // Función para realizar una solicitud al servidor y mostrar la información
+        function fetchData() {
+            // Realizar una solicitud HTTP al servidor para obtener la información de los procesos
+            fetch('http://localhost:8080/update_process_info')
+                .then(response => response.json())
+                .then(data => {
+                    // Limpiar el contenedor de información
+                    document.getElementById('processInfo').innerHTML = '';
+
+                    // Mostrar la nueva información en la interfaz de usuario
+                    data.forEach(process => {
+                        document.getElementById('processInfo').innerHTML += `
+                            <div>
+                                <p>Nombre: ${process.name}</p>
+                                <p>PID: ${process.pid}</p>
+                                <p>Prioridad: ${process.priority}</p>
+                                <p>Tiempo de Ráfaga: ${process.burst_time}</p>
+                                <p>Tiempo de Llegada: ${process.arrival_time}</p>
+                                <p>Tiempo Restante: ${process.left_time}</p>
+                                <p>Tiempo de Espera: ${process.waiting_time}</p>
+                                <p>Tiempo de Respuesta: ${process.response_time}</p>
+                            </div>
+                            <hr>
+                        `;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Llamar a fetchData al cargar la página para obtener la información inicial
+        document.addEventListener("DOMContentLoaded", function() {
+            // Realizar una solicitud HTTP al servidor para obtener la información inicial
+            fetch('http://localhost:8080/initial_process_info')
+                .then(response => response.json())
+                .then(data => {
+                    // Mostrar la información inicial en la interfaz de usuario
+                    document.getElementById('processInfo').innerHTML = '';
+
+                    data.forEach(process => {
+                        document.getElementById('processInfo').innerHTML += `
+                            <div>
+                                <p>Nombre: ${process.name}</p>
+                                <p>PID: ${process.pid}</p>
+                                <p>Prioridad: ${process.priority}</p>
+                                <p>Tiempo de Ráfaga: ${process.burst_time}</p>
+                                <p>Tiempo de Llegada: ${process.arrival_time}</p>
+                                <p>Tiempo Restante: ${process.left_time}</p>
+                                <p>Tiempo de Espera: ${process.waiting_time}</p>
+                                <p>Tiempo de Respuesta: ${process.response_time}</p>
+                            </div>
+                            <hr>
+                        `;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+</body>
+</html>
