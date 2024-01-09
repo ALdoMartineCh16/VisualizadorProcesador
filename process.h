@@ -1,41 +1,30 @@
-#ifndef PROCESS_H
-#define PROCESS_H
+#ifndef __PROCESS_H__
+#define __PROCESS_H__
 
-#include <string.h>
-using namespace std;
+#include <string>
+
 class ProcessInfo {
 public:
-    char name[256];
+    std::string name;
     int pid;
     int priority;
-    int burst_time;
-    int arrival_time;
-    int left_time;
-    int waiting_time;
-    int response_time;
+    double burst_time;     // nanosec
+    double arrival_time;   // sec
+    double left_time;      // nanosec
+    double waiting_time;   // nanosec
+    double response_time;  // nanosec
 
-    ProcessInfo(){}
-    ProcessInfo(char *name, int pid, int priority, int burst_time, int arrival_time) {
-        strcpy(this->name, name);
-        this->pid = pid;
-        this->priority = priority;
-        this->burst_time = burst_time;
-        this->arrival_time = arrival_time;
-        this->left_time = burst_time;
-        this->waiting_time = 0;
-        this->response_time = 0;
-    }
-    void InitProcessInfo(char *name, int pid, int priority, int burst_time, int arrival_time) {
-        strcpy(this->name, name);
-        this->pid = pid;
-        this->priority = priority;
-        this->burst_time = burst_time;
-        this->arrival_time = arrival_time;
-        this->left_time = burst_time;
-        this->waiting_time = 0;
-        this->response_time = 0;
-    }
+    ProcessInfo() = default;
+
+    ProcessInfo(const std::string& name, int pid, int priority, double burst_time, double arrival_time) : 
+        name(name), 
+        pid(pid), 
+        priority(priority), 
+        burst_time(burst_time), 
+        arrival_time(arrival_time), 
+        left_time(burst_time), 
+        waiting_time(0), 
+        response_time(0) {}
 };
 
-
-#endif
+#endif // __PROCESS_H__
