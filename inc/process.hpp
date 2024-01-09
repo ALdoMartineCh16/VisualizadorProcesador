@@ -7,12 +7,12 @@ class ProcessInfo {
 public:
     std::string name;
     int pid;
-    int priority;
-    double burst_time;     // nanosec
-    double arrival_time;   // sec
-    double left_time;      // nanosec
-    double waiting_time;   // nanosec
-    double response_time;  // nanosec
+    int priority;           // -20 (high) to 19 (low)
+    double burst_time;      // nanosec
+    double arrival_time;    // sec
+    double left_time;       // nanosec
+    double waiting_time;    // nanosec
+    double response_time;   // nanosec
 
     ProcessInfo() = default;
 

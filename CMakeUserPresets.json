@@ -1,0 +1,9 @@
+{
+    "version": 4,
+    "vendor": {
+        "conan": {}
+    },
+    "include": [
+        "/home/owen/Documents/SO/VisualizadorProcesador/build/CMakePresets.json"
+    ]
+}
