@@ -1,0 +1,6 @@
+# Extension-less files (binaries)
+*
+!/**/
+!*.*
+# vscode
+**/.vscode/
