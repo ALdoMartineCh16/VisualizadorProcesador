@@ -63,7 +63,7 @@ Asegúrate de tener instalados los siguientes componentes antes de construir el 
     ```bash
     ./VisualizadorProcesos
     ```
-7. Abre en tu navegador el [archivo HTML](VisualizadorProcesador/blob/dev/frontend/visualizer.html):
+7. Abre en tu navegador el [archivo HTML](frontend/visualizer.html):
 
 ## Notas
 
