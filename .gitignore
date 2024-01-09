@@ -2,5 +2,13 @@
 *
 !/**/
 !*.*
-# vscode
-**/.vscode/
+
+# vscode included for conan integration
+
+# Archivos generados por CMake, conan
+/build/
+
+# Otros archivos generados
+*.o
+*.out
+*.exe
