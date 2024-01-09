@@ -87,6 +87,7 @@ void getProcesses(std::vector<ProcessInfo> &processes)
                 }
             }
         }
+    std::cout << "Nº processes: " << processes.size() << std::endl;
 }
 
 void showProcesses(const std::vector<ProcessInfo>& processes)
