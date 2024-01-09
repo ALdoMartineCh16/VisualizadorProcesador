@@ -1,32 +1,30 @@
-#ifndef PROCESS_H
-#define PROCESS_H
+#ifndef __PROCESS_H__
+#define __PROCESS_H__
 
-#include <string.h>
+#include <string>
 
-struct ProcessInfo
-{
-    char name[256];
+class ProcessInfo {
+public:
+    std::string name;
     int pid;
     int priority;
-    int burst_time;
-    int arrival_time;
-    int left_time;
-    int waiting_time;
-    int response_time;
+    double burst_time;     // nanosec
+    double arrival_time;   // sec
+    double left_time;      // nanosec
+    double waiting_time;   // nanosec
+    double response_time;  // nanosec
+
+    ProcessInfo() = default;
+
+    ProcessInfo(const std::string& name, int pid, int priority, double burst_time, double arrival_time) : 
+        name(name), 
+        pid(pid), 
+        priority(priority), 
+        burst_time(burst_time), 
+        arrival_time(arrival_time), 
+        left_time(burst_time), 
+        waiting_time(0), 
+        response_time(0) {}
 };
 
-struct ProcessInfo initializeProcessInfo(char *name, int pid, int priority, int burst_time, int arrival_time)
-{
-    struct ProcessInfo newProcess;
-    strcpy(newProcess.name, name);
-    newProcess.pid = pid;
-    newProcess.priority = priority;
-    newProcess.burst_time = burst_time;
-    newProcess.arrival_time = arrival_time;
-    newProcess.left_time = burst_time;
-    newProcess.waiting_time = 0;
-    newProcess.response_time = 0;
-    return newProcess;
-}
-
-#endif
+#endif // __PROCESS_H__
