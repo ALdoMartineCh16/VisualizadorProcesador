@@ -57,7 +57,6 @@ class ProcessObject_RR{
                 if(tempQuantum < limitPer){
                     limitPer = tempQuantum;
                 }
-
                 tempQuantum -= limitPer;
                 tempBurst-= limitPer;
 
@@ -97,7 +96,7 @@ class ProcessObject_RR{
 function createBoxRR(index,burst,name,pid){
     let divBox = document.createElement("div");
     divBox.classList.add("process", "bubbletext");
-    roundRobinProcesses.push(new ProcessObject_RR(divBox,burst,name,pid,900 + 120*index,175));
+    roundRobinProcesses.push(new ProcessObject_RR(divBox,burst,name,pid,900 + 170*index,175));
     return divBox;
 }
 
@@ -120,7 +119,7 @@ function moveAllProcessesRR(){
 
 function RobinAnimation(){
     if(roundRobinProcesses[actual].actualPosY >= 295){
-        if(roundRobinProcesses[actual].actualPosX <= 450){
+        if(roundRobinProcesses[actual].actualPosX <= 425){
             clearInterval(interval);
             roundRobinProcesses[actual].consumeBurst();
         }else{

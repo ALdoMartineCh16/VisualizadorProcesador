@@ -75,7 +75,7 @@ class ProcessObject_FIFO{
 function createBoxFIFO(index,burst,name,pid){
     let divBox = document.createElement("div");
     divBox.classList.add("process", "bubbletext");
-    fifoProcesses.push(new ProcessObject_FIFO(divBox,burst,name,pid,900 + 120*index,175));
+    fifoProcesses.push(new ProcessObject_FIFO(divBox,burst,name,pid,900 + 170*index,175));
     return divBox;
 }
 
@@ -91,7 +91,7 @@ function moveAllProcessesFIFO(){
 
 function FIFOAnimation(){
     if(fifoProcesses[0].actualPosY >= 295){
-        if(fifoProcesses[0].actualPosX <= 450){
+        if(fifoProcesses[0].actualPosX <= 425){
             clearInterval(interval);
             fifoProcesses[0].consumeBurst();
         }else{

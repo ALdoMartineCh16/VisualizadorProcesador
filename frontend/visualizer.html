@@ -70,7 +70,7 @@
             var input = document.getElementById("timeSliceInput");
             var value = parseFloat(input.value);
             // Scale nano -> micro como segundos
-            var newValue = value * 1000;
+            //var newValue = value * 1000;
             input.value = newValue;
         }
 
@@ -99,7 +99,8 @@
             clearContainer(container);
             
             let procesator = document.getElementById("procesator");
-            procesator.classList.remove("hidden");
+            procesator.style.display = "flex";
+            procesator.style.opacity = 1;
 
             if (algorithmSelect.value === "FIFO") {
                 fetchData(container, FIFO, createBoxFIFO);

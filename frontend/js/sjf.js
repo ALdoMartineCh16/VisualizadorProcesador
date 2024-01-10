@@ -92,7 +92,7 @@ function findMinor() {
 function createBoxSJF(index,burst,name,pid){
     let divBox = document.createElement("div");
     divBox.classList.add("process", "bubbletext");
-    sjfProcesses.push(new ProcessObject_SJF(divBox,burst,name,pid,900 + 120*index,175));
+    sjfProcesses.push(new ProcessObject_SJF(divBox,burst,name,pid,900 + 170*index,175));
     return divBox;
 }
 
@@ -108,7 +108,7 @@ function moveAllProcessesSFJ(){
 
 function SJFAnimation(){
     if(sjfProcesses[actual].actualPosY >= 350){
-        if(sjfProcesses[actual].actualPosX <= 450){
+        if(sjfProcesses[actual].actualPosX <= 425){
             clearInterval(interval);
             sjfProcesses[actual].consumeBurst();
         }else{

@@ -14,7 +14,7 @@ input[type=number] {
 .process{
     top: 175px;
     left: 900px;
-    width: 100px;
+    width: 150px;
     height: 120px;
     background: red;
     position: absolute;
@@ -32,9 +32,10 @@ input[type=number] {
     height: 50px;
     background: rgb(180, 89, 178);
     position: relative;
-    display: flex;
+
     align-items: center;
     justify-content: center;
+    opacity:0;
 }
 
 .bubbletext{
