@@ -1,0 +1,14 @@
+# Extension-less files (binaries)
+*
+!/**/
+!*.*
+
+# vscode included for conan integration
+
+# Archivos generados por CMake, conan
+/build/
+
+# Otros archivos generados
+*.o
+*.out
+*.exe
