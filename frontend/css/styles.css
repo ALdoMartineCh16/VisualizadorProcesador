@@ -1,4 +1,17 @@
-#process{
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+#container {
+    position: relative;
+}
+
+.process{
     top: 175px;
     left: 900px;
     width: 100px;
@@ -18,7 +31,7 @@
     width: 600px;
     height: 50px;
     background: rgb(180, 89, 178);
-    position: absolute;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,4 +41,8 @@
     font-size: 20px;
     text-align: center;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.hidden {
+    display: none;
 }

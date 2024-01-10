@@ -1,13 +1,13 @@
-let processes = [];
-let interval;
-let interval2;
-let actual = 0;
-let lastPosition;
-let quantum = 2000;
-let moX = 10;
-let moY = 10;
+let roundRobinProcesses = [];
+var interval;
+var interval2;
+var actual = 0;
+var lastPosition;
+var quantum;
+let moX_RR = 10;
+var moY = 10;
 
-class ProcessObject{
+class ProcessObject_RR{
     constructor(referenceDocument,burstTime,name,pid,actualPosX,actualPosY){
         this.name = name;
         this.pid = pid;
@@ -94,46 +94,44 @@ class ProcessObject{
     }
 }
 
-function createBox(index,burst,name,pid){
+function createBoxRR(index,burst,name,pid){
     let divBox = document.createElement("div");
-    divBox.id = "process";
-    divBox.className = "bubbletext";
-    processes.push(new ProcessObject(divBox,burst,name,pid,900 + 120*index,175));
+    divBox.classList.add("process", "bubbletext");
+    roundRobinProcesses.push(new ProcessObject_RR(divBox,burst,name,pid,900 + 120*index,175));
     return divBox;
 }
 
 function createBoxBackup(backup){
     let divBox = document.createElement("div");
-    divBox.id = "process";
-    divBox.className = "bubbletext";
-    processes.push(new ProcessObject(divBox, backup.burstTime, backup.name, backup.pid ,900 + 120*(processes.length-1),175));
+    divBox.classList.add("process", "bubbletext");
+    roundRobinProcesses.push(new ProcessObject_RR(divBox, backup.burstTime, backup.name, backup.pid ,900 + 120*(roundRobinProcesses.length-1),175));
     return divBox;
 }
 
-function moveAllProcesses(){
-    if(processes.length - 1 == actual || processes.length == 0 || (processes.length>1 && processes[actual+1].actualPosX <= lastPosition)){
+function moveAllProcessesRR(){
+    if(roundRobinProcesses.length - 1 == actual || roundRobinProcesses.length == 0 || (roundRobinProcesses.length>1 && roundRobinProcesses[actual+1].actualPosX <= lastPosition)){
         clearInterval(interval2);
         return;
     }
-    for(let i = actual+1; i<processes.length; i++){
-        processes[i].addToPos(-10,0);
+    for(let i = actual+1; i<roundRobinProcesses.length; i++){
+        roundRobinProcesses[i].addToPos(-10,0);
     }   
 }
 
 function RobinAnimation(){
-    if(processes[actual].actualPosY >= 295){
-        if(processes[actual].actualPosX <= 450){
+    if(roundRobinProcesses[actual].actualPosY >= 295){
+        if(roundRobinProcesses[actual].actualPosX <= 450){
             clearInterval(interval);
-            processes[actual].consumeBurst();
+            roundRobinProcesses[actual].consumeBurst();
         }else{
-            processes[actual].addToPos(-moX,0);
+            roundRobinProcesses[actual].addToPos(-moX_RR,0);
         }
         
     }else{
-        processes[actual].addToPos(0,moY); 
-        if(processes[actual].actualPosY >= 295){
-            lastPosition = processes[actual].actualPosX;
-            interval2 = setInterval(moveAllProcesses,10);
+        roundRobinProcesses[actual].addToPos(0,moY); 
+        if(roundRobinProcesses[actual].actualPosY >= 295){
+            lastPosition = roundRobinProcesses[actual].actualPosX;
+            interval2 = setInterval(moveAllProcessesRR,10);
         }
     }
 }
@@ -141,51 +139,51 @@ function RobinAnimation(){
 function midRobin(q){
     let nuevoDiv;
     if(q > 0){
-        let backup = processes[actual];
+        let backup = roundRobinProcesses[actual];
         backup.burstTime = q;
         nuevoDiv = createBoxBackup(backup);
         container.appendChild(nuevoDiv);
     }
-    processes[actual].referenceDocument.remove();
-    processes.splice(actual,1);
-    if(0 == processes.length){
+    roundRobinProcesses[actual].referenceDocument.remove();
+    roundRobinProcesses.splice(actual,1);
+    if(0 == roundRobinProcesses.length){
         return;
     }
     interval = Robin();
 }
 
 function Robin(){
-    if(0 == processes.length){
+    if(0 == roundRobinProcesses.length){
         return null;
     }
     let intervalo = setInterval(RobinAnimation,10);
     return intervalo;
 }
 
-function fetchData(container) {
-    let index = 0;
-    return new Promise((resolve, reject) => {
-        fetch('http://localhost:8080/update_process_info')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(process => {
-                    let nuevoDiv = createBox(index, process.burst_time.toFixed(4), process.name, process.pid);
-                    container.appendChild(nuevoDiv);
-                    index++;
-                });
-                resolve();
-            })
-            .catch(error => reject(error));
-    });
-}
+// function fetchData(container) {
+//     let index = 0;
+//     return new Promise((resolve, reject) => {
+//         fetch('http://localhost:8080/update_process_info')
+//             .then(response => response.json())
+//             .then(data => {
+//                 data.forEach(process => {
+//                     let nuevoDiv = createBox(index, process.burst_time.toFixed(4), process.name, process.pid);
+//                     container.appendChild(nuevoDiv);
+//                     index++;
+//                 });
+//                 resolve();
+//             })
+//             .catch(error => reject(error));
+//     });
+// }
 
-document.addEventListener("DOMContentLoaded", function() {
-    let container = document.getElementById("container");
+// document.addEventListener("DOMContentLoaded", function() {
+//     let container = document.getElementById("container");
 
-    fetchData(container)
-        .then(() => {
-            console.log('fetchData completado, ejecutando el resto del código');
-            interval = Robin();
-        })
-        .catch(error => console.error('Error:', error));
-});
+//     fetchData(container)
+//         .then(() => {
+//             console.log('fetchData completado, ejecutando el resto del código');
+//             interval = Robin();
+//         })
+//         .catch(error => console.error('Error:', error));
+// });

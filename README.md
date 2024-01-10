@@ -37,6 +37,7 @@ Asegúrate de tener instalados los siguientes componentes antes de construir el 
 2. Instala las dependencias utilizando Conan:
 
     ```bash
+    conan profile detect --force
     conan install . --output-folder=build --build=missing
     ```
 

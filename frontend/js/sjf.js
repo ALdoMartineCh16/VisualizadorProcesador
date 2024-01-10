@@ -1,12 +1,12 @@
-let processes = [];
-let interval;
-let interval2;
-let actual;
-let lastPosition;
-let moX = 50;
-let moY = 10;
+let sjfProcesses = [];
+var interval;
+var interval2;
+var actual = 0;
+var lastPosition;
+let moX_SJF = 50;
+var moY = 10;
 
-class ProcessObject{
+class ProcessObject_SJF{
     constructor(referenceDocument,burstTime,name,pid,actualPosX,actualPosY){
         this.name = name;
         this.pid = pid;
@@ -75,67 +75,66 @@ class ProcessObject{
 }
 
 function findMinor() {
-    if (processes.length == 0) {
+    if (sjfProcesses.length == 0) {
         return -1;
     }
-    let menor = processes[0].burstTime;
+    let menor = sjfProcesses[0].burstTime;
     let index = 0;
-    for (let i = 1; i < processes.length; i++) {
-        if (processes[i].burstTime < menor) {
-            menor = processes[i].burstTime;
+    for (let i = 1; i < sjfProcesses.length; i++) {
+        if (sjfProcesses[i].burstTime < menor) {
+            menor = sjfProcesses[i].burstTime;
             index = i;
         }
     }
     return index;
 }
 
-function createBox(index,burst,name,pid){
+function createBoxSJF(index,burst,name,pid){
     let divBox = document.createElement("div");
-    divBox.id = "process";
-    divBox.className = "bubbletext";
-    processes.push(new ProcessObject(divBox,burst,name,pid,900 + 120*index,175));
+    divBox.classList.add("process", "bubbletext");
+    sjfProcesses.push(new ProcessObject_SJF(divBox,burst,name,pid,900 + 120*index,175));
     return divBox;
 }
 
-function moveAllProcesses(){
-    if(processes.length - 1 == actual || processes.length == 0 || (processes.length>1 && processes[actual+1].actualPosX <= lastPosition)){
+function moveAllProcessesSFJ(){
+    if(sjfProcesses.length - 1 == actual || sjfProcesses.length == 0 || (sjfProcesses.length>1 && sjfProcesses[actual+1].actualPosX <= lastPosition)){
         clearInterval(interval2);
         return;
     }
-    for(let i = actual+1; i<processes.length; i++){
-        processes[i].addToPos(-10,0);
+    for(let i = actual+1; i<sjfProcesses.length; i++){
+        sjfProcesses[i].addToPos(-10,0);
     }   
 }
 
 function SJFAnimation(){
-    if(processes[actual].actualPosY >= 350){
-        if(processes[actual].actualPosX <= 450){
+    if(sjfProcesses[actual].actualPosY >= 350){
+        if(sjfProcesses[actual].actualPosX <= 450){
             clearInterval(interval);
-            processes[actual].consumeBurst();
+            sjfProcesses[actual].consumeBurst();
         }else{
-            processes[actual].addToPos(-moX,0);
+            sjfProcesses[actual].addToPos(-moX_SJF,0);
         }
         
     }else{
-        processes[actual].addToPos(0,moY); 
-        if(processes[actual].actualPosY >= 350){
-            lastPosition = processes[actual].actualPosX;
-            interval2 = setInterval(moveAllProcesses,10);
+        sjfProcesses[actual].addToPos(0,moY); 
+        if(sjfProcesses[actual].actualPosY >= 350){
+            lastPosition = sjfProcesses[actual].actualPosX;
+            interval2 = setInterval(moveAllProcessesSFJ,10);
         }
     }
 }
 
 function midSJF(){
-    processes[actual].referenceDocument.remove();
-    processes.splice(actual,1);
-    if(0 == processes.length){
+    sjfProcesses[actual].referenceDocument.remove();
+    sjfProcesses.splice(actual,1);
+    if(0 == sjfProcesses.length){
         return;
     }
     interval = SJF();
 }
 
 function SJF(){
-    if(0 == processes.length){
+    if(0 == sjfProcesses.length){
         return null;
     }
     actual = findMinor();
@@ -143,30 +142,31 @@ function SJF(){
     let intervalo = setInterval(SJFAnimation,10);
     return intervalo;
 }
-function fetchData(container) {
-    let index = 0;
-    return new Promise((resolve, reject) => {
-        fetch('http://localhost:8080/update_process_info')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(process => {
-                    let nuevoDiv = createBox(index, process.burst_time.toFixed(4), process.name, process.pid);
-                    container.appendChild(nuevoDiv);
-                    index++;
-                });
-                resolve();
-            })
-            .catch(error => reject(error));
-    });
-}
 
-document.addEventListener("DOMContentLoaded", function() {
-    let container = document.getElementById("container");
+// function fetchData(container) {
+//     let index = 0;
+//     return new Promise((resolve, reject) => {
+//         fetch('http://localhost:8080/update_process_info')
+//             .then(response => response.json())
+//             .then(data => {
+//                 data.forEach(process => {
+//                     let nuevoDiv = SJF(index, process.burst_time.toFixed(4), process.name, process.pid);
+//                     container.appendChild(nuevoDiv);
+//                     index++;
+//                 });
+//                 resolve();
+//             })
+//             .catch(error => reject(error));
+//     });
+// }
 
-    fetchData(container)
-        .then(() => {
-            console.log('fetchData completado, ejecutando el resto del código');
-            interval = SJF();
-        })
-        .catch(error => console.error('Error:', error));
-});
+// document.addEventListener("DOMContentLoaded", function() {
+//     let container = document.getElementById("container");
+
+//     fetchData(container)
+//         .then(() => {
+//             console.log('fetchData completado, ejecutando el resto del código');
+//             interval = SJF();
+//         })
+//         .catch(error => console.error('Error:', error));
+// });
