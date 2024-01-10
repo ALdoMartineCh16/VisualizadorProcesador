@@ -4,6 +4,6 @@
         "conan": {}
     },
     "include": [
-        "/home/owen/Documents/SO/VisualizadorProcesador/build/CMakePresets.json"
+        "/home/dogez/Descargas/VisualizadorProcesador/build/CMakePresets.json"
     ]
 }

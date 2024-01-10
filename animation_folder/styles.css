@@ -2,7 +2,7 @@
     top: 175px;
     left: 900px;
     width: 100px;
-    height: 100px;
+    height: 120px;
     background: red;
     position: absolute;
     transition: opacity 0.7s ease-in-out, transform 0.8s ease-in-out;
@@ -10,6 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column; 
 }
 #procesator{
     top:200px;
